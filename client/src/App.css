@@ -15,13 +15,17 @@
   background-size: cover;
 }
 /* ********************* Team Page ********************************/
-.fieldPicture {
-  background-image: url(./pictures/fieldBackground.jpg);
+.ballPicture {
+  background-image: url(./pictures/ball.jpg);
   background-size: cover;
 }
 
 .navBar {
-  height: 10%;
-  background: black;
-  color: white
+  height: 10vh;
+  background: rgb(116, 112, 112);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 2em;
+  z-index: 1;
 }

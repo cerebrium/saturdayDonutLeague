@@ -11,7 +11,7 @@ function Players () {
                     <Link to='/team'>Team</Link>
                 </nav>
             </div>
-            <div className='App'>
+            <div className='App ballPicture'>
                 <h1>Welcome to the player page</h1>
             </div>
         </>

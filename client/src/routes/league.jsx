@@ -11,7 +11,7 @@ function League () {
                     <Link to='/team'>Team</Link>
                 </nav>
             </div>
-            <div className='App'>
+            <div className='App ballPicture'>
                 <h1>League</h1>
             </div>
         </>    

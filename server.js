@@ -19,7 +19,8 @@ db.on('error', (err) => {
     console.log(`Database Error: \n${err}`)
 })
 
-app.use('/user', require('./routes/auth'))
+app.use('/user', require('./routes/auth'));
+app.use('/api', require('./routes/api'));
 
 app.listen(process.env.PORT, () => {
     console.log(`server running on port: ${process.env.PORT}`)

@@ -22,7 +22,7 @@ const teamSchema = new mongoose.Schema ({
     user_ID : {
         type: [userSchema],
         required: true
-    }
+    },
 })
 
 const playerSchema = new mongoose.Schema ({
@@ -34,4 +34,11 @@ const playerSchema = new mongoose.Schema ({
     }
 })
 
+const apiSchema = new mongoose.Schema ({
+    team: Object
+})
+
 module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('Player', playerSchema)
+module.exports = mongoose.model('Api', apiSchema)
+module.exports = mongoose.model('Team', teamSchema)
