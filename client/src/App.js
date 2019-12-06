@@ -17,15 +17,18 @@ function App() {
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [user, setUser] = useState(null);
 
   // handles writting data to database and recieving google data
   const responseGoogle = (response) => {
     setUserName(response.profileObj.givenName)
     setUserId(response.profileObj.googleId)
     setUserEmail(response.profileObj.email)
+    setUser(response.profileObj)
       axios.post('/user/signup', {
         name: response.profileObj.name, 
         email: response.profileObj.email, 
+        Id: response.profileObj.googleId
       }).then(res => {
         console.log(`data written`)
       })
@@ -37,7 +40,7 @@ function App() {
     navbar = (
       <>
         <Route exact path='/' component={Logout} />
-        <Route exact path='/league' component={League} />
+        <Route exact path='/league' render={ () => <League user={user} /> } />
         <Route exact path='/players' component={Players} />
         <Route exact path='/team' component={Team} />
       </>
