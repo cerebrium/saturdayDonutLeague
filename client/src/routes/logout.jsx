@@ -6,8 +6,8 @@ function Logout () {
         <>
             <div className='navBar'>
                     <nav>
-                        <Link to='/league'>League</Link>{' | '}
-                        <Link to='/players'>Players</Link>{' | '}
+                        <Link to='/'>League</Link>{' | '}
+                        <Link to='/formation'>Formation</Link>{' | '}
                         <Link to='/team'>Team</Link>
                     </nav>
                 </div>

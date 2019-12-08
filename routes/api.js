@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
+const axios = require('axios')
 const Api = require('../models/api')
+const User = require('../models/user')
 
 // Api call route to grab data and put it in the database
 
@@ -37,22 +38,33 @@ const Api = require('../models/api')
 // })
 
     // get current years players
-    router.get('/currentplayers', (req, res) => {
+    router.get('/currentplayers/:id', (req, res) => {
         const myCurrentArray = []
         const myCheckerArray = []
-        console.log('============================================= in the currentplayers route')
+        const myCurrentTeamArray = []
+
+        // grabbing the current team fot the user so that the already selected players arent listed
+        User.findById(req.params.id, (err, user) => {
+            console.log('In the API route User section')
+            user.team.forEach((ele, index) => {
+                myCurrentTeamArray.push(ele.player_id)
+            })
+        })
+
+        // sorting the data in the database to display the players that are the current team
         Api.findById({_id: '5dea9ebd4cb6ed115216499f'}, (err, team_data) => {
             if (team_data) {
                 team_data.team.api.players.forEach((ele, index) => {
-                    if (ele.season === "2018-2019") {
-                        console.log('found one: ', ele)
-                        if (!myCheckerArray.includes(ele.player_id)) {
+                    if (ele.season === "2018-2019" && ele.league === 'Premier League') {
+                        if (myCheckerArray.includes(ele.player_id) === false && myCurrentTeamArray.includes(ele.player_id) === false) {
                             myCurrentArray.push(ele)
                             myCheckerArray.push(ele.player_id)
                         }
                     }
                 })
             }
+            // console.log('===========================================================')
+            // console.log('myCurrentArray', myCurrentArray)
             res.json(myCurrentArray)
         })
     })

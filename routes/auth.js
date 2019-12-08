@@ -9,12 +9,11 @@ router.post('/signup', (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {
         // if user found wont write anything, else going to write to db
        if (user) {
-           res.json({
-               message: 'user found in database'
-           })
+           res.json(user)
        } else {
             let user = new User(req.body)
             user.save();
+            res.json(user)
        }
     })
 })

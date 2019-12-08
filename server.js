@@ -21,6 +21,7 @@ db.on('error', (err) => {
 
 app.use('/user', require('./routes/auth'));
 app.use('/api', require('./routes/api'));
+app.use('/team', require('./routes/team'));
 
 app.listen(process.env.PORT, () => {
     console.log(`server running on port: ${process.env.PORT}`)

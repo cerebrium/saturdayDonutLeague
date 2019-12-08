@@ -3,7 +3,7 @@ import { GoogleLogin } from 'react-google-login';
 import './App.css';
 import axios from 'axios';
 import League from './routes/league';
-import Players from './routes/players';
+import Formation from './routes/formation';
 import Team from './routes/team';
 import Logout from './routes/logout';
 import {
@@ -24,13 +24,15 @@ function App() {
     setUserName(response.profileObj.givenName)
     setUserId(response.profileObj.googleId)
     setUserEmail(response.profileObj.email)
-    setUser(response.profileObj)
       axios.post('/user/signup', {
         name: response.profileObj.name, 
         email: response.profileObj.email, 
-        Id: response.profileObj.googleId
+        googleId: response.profileObj.googleId,
+        team: {}
       }).then(res => {
         console.log(`data written`)
+        setUser(res.data)
+        console.log(res.data)
       })
   }
 
@@ -39,10 +41,10 @@ function App() {
   if (userName) {
     navbar = (
       <>
-        <Route exact path='/' component={Logout} />
-        <Route exact path='/league' render={ () => <League user={user} /> } />
-        <Route exact path='/players' component={Players} />
-        <Route exact path='/team' component={Team} />
+        <Route exact path='/logout' component={Logout} />
+        <Route exact path='/' render={ () => <League user={user} /> } />
+        <Route exact path='/formation' render={ () => <Formation user={user} /> } />
+        <Route exact path='/team' render={ () => <Team user={user} /> } />
       </>
     )
   } else {
