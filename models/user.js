@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema ({
     },
     team: {
         type: Array
+    }, 
+    startingEleven: {
+        type: Array
+    },
+    league: {
+        type: String
     }
 })
 

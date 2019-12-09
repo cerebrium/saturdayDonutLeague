@@ -5,6 +5,7 @@ import axios from 'axios';
 import League from './routes/league';
 import Formation from './routes/formation';
 import Team from './routes/team';
+import Welcome from './routes/welcome';
 import Logout from './routes/logout';
 import {
   BrowserRouter as Router,
@@ -42,7 +43,8 @@ function App() {
     navbar = (
       <>
         <Route exact path='/logout' component={Logout} />
-        <Route exact path='/' render={ () => <League user={user} /> } />
+        <Route exact path='/' component={Welcome} />
+        <Route exact path='/league' render={ () => <League user={user} /> } />
         <Route exact path='/formation' render={ () => <Formation user={user} /> } />
         <Route exact path='/team' render={ () => <Team user={user} /> } />
       </>

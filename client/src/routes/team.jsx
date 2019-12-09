@@ -88,8 +88,9 @@ function Team (props) {
         <>
             <div className='navBar'>
                     <nav>
-                        <Link to='/'>League</Link>{' | '}
+                        <Link to='/'>Welcome</Link>{' | '}
                         <Link to='/formation'>Formation</Link>{' | '}
+                        <Link to='/league'>League</Link>{' | '}
                         <Link to='/team'>Team</Link>
                     </nav>
                 </div>

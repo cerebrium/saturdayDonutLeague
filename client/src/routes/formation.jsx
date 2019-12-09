@@ -24,10 +24,11 @@ function Formation (props) {
     // gate for not having infinite loop
     const [myGate, setMyGate] = useState(false)
 
-    //
+    // Temp player for swithcing
+
 
     // ------------------------------- FUNCTIONS -----------------------------------
-
+    
     // Grabbing current team for display on the left
     useEffect(() => {
         axios.get(`/team/current/${props.user._id}`).then(response => {
@@ -35,11 +36,169 @@ function Formation (props) {
             setMyGate(true)
         })
     },[])
+    
+    // ------------------------------- REPLACING PLAYERS FUNCTIONS -----------------------------------
 
     // Replace player in lineup with player on team
-    var handleClick = (event) => {
-        event.preventDefault()
-        console.log('we in the wilds now bruh')
+    var handleBenchClick = (event, ele) => {
+         // On Field Players
+         var tempmid = [...midfielders];
+         var tempdef = [...defenders];
+         var tempfor = [...forwards];
+         var tempgol = [...goalie];
+
+         // On Bench Player Arrays in state
+         var benchTempmid = [...benchMidfielders];
+         var benchTempdef = [...benchDefenders];
+         var benchTempfor = [...benchForwards];
+         var benchTempgol = [...benchGoalie];
+
+        console.log('player is on the field trying to get benched', ele.player_name)
+        var indexOfPlayer;
+        // Logic for removing player from on field array and adding them to the bench array
+        // Forwards
+        if (ele.position === 'Attacker') {
+            tempfor.forEach((innerEle, index) => {
+                if(innerEle.player_name === ele.player_name) {
+                    indexOfPlayer = index
+                }
+            })
+            console.log('index of player is', indexOfPlayer)
+            tempfor.splice(indexOfPlayer, 1)
+            console.log(tempfor)
+            benchTempfor.push(ele)
+            
+            // Midfielders
+        } else if (ele.position === 'Midfielder') {
+            tempmid.forEach((innerEle, index) => {
+                if(innerEle.player_name === ele.player_name) {
+                    indexOfPlayer = index
+                }
+            })
+            tempmid.splice(indexOfPlayer, 1)
+            benchTempmid.push(ele)
+
+            // Defenders
+        } else if (ele.position === 'Defender') {
+            tempdef.forEach((innerEle, index) => {
+                if(innerEle.player_name === ele.player_name) {
+                    indexOfPlayer = index
+                }
+            })
+            tempdef.splice(indexOfPlayer, 1)
+            benchTempdef.push(ele)
+
+            // Goalie
+        } else {
+            tempgol.forEach((innerEle, index) => {
+                if(innerEle.player_name === ele.player_name) {
+                    indexOfPlayer = index
+                }
+            })
+            tempgol.splice(indexOfPlayer, 1)
+            benchTempgol.push(ele)
+        }
+
+        // Set State for non-playin players
+        setBenchMidfielders(benchTempmid)
+        setBenchDefenders(benchTempdef)
+        setBenchForwards(benchTempfor)
+        setBenchGoalie(benchTempgol)
+
+        // Set state for playing players
+        setMidfielders(tempmid)
+        setDefenders(tempdef)
+        setForwards(tempfor)
+        setGoalie(tempgol)
+    }
+
+    // Put player from bench onto the field
+    var handleClick = (event, ele) => {
+        // On Field Players
+        var tempmid = [...midfielders];
+        var tempdef = [...defenders];
+        var tempfor = [...forwards];
+        var tempgol = [...goalie];
+
+        // On Bench Player Arrays in state
+        var benchTempmid = [...benchMidfielders];
+        var benchTempdef = [...benchDefenders];
+        var benchTempfor = [...benchForwards];
+        var benchTempgol = [...benchGoalie];
+
+       console.log('player is on the field trying to get benched', ele.player_name)
+       var indexOfPlayer;
+       // Logic for removing player from on field array and adding them to the bench array
+       // Forwards
+       if (ele.position === 'Attacker' && tempfor.length < 2) {
+           benchTempfor.forEach((innerEle, index) => {
+               if(innerEle.player_name === ele.player_name) {
+                   indexOfPlayer = index
+               }
+           })
+           if (indexOfPlayer !== 'undefined') {
+               benchTempfor.splice(indexOfPlayer, 1)
+               tempfor.push(ele)
+           } else {
+               console.log('too many player there')
+           }
+           
+           // Midfielders
+       } else if (ele.position === 'Midfielder' && tempmid.length < 4) {
+            benchTempmid.forEach((innerEle, index) => {
+                if(innerEle.player_name === ele.player_name) {
+                    indexOfPlayer = index
+                }
+            })
+            if (indexOfPlayer !== 'undefined') {
+                benchTempmid.splice(indexOfPlayer, 1)
+                tempmid.push(ele)
+            } else {
+                console.log('too many player there')
+            }
+
+           // Defenders
+       } else if (ele.position === 'Defender' && tempdef.length < 4) {
+            benchTempdef.forEach((innerEle, index) => {
+                if(innerEle.player_name === ele.player_name) {
+                    indexOfPlayer = index
+                }
+            })
+            if (indexOfPlayer !== 'undefined') {
+                benchTempdef.splice(indexOfPlayer, 1)
+                tempdef.push(ele)
+            } else {
+                console.log('too many player there')
+            }
+
+           // Goalie
+       } else {
+            if (tempgol.length < 1) {
+                benchTempgol.forEach((innerEle, index) => {
+                    if(innerEle.player_name === ele.player_name) {
+                        indexOfPlayer = index
+                    }
+                })
+                if (indexOfPlayer !== 'undefined') {
+                    benchTempgol.splice(indexOfPlayer, 1)
+                    tempgol.push(ele)
+                }
+            } else {
+                console.log('too many player there')
+            }
+       }
+
+       // Set State for non-playin players
+       setBenchMidfielders(benchTempmid)
+       setBenchDefenders(benchTempdef)
+       setBenchForwards(benchTempfor)
+       setBenchGoalie(benchTempgol)
+
+       // Set state for playing players
+       setMidfielders(tempmid)
+       setDefenders(tempdef)
+       setForwards(tempfor)
+       setGoalie(tempgol)
     }
 
     
@@ -51,6 +210,7 @@ function Formation (props) {
         selectedTeam = ''
     }
     
+    // ----------------------- SORTING FUNCTION ------------------
     // Adding Players to state based on their positions
     function sort() {
         if (currentTeam && myGate) {
@@ -112,11 +272,25 @@ function Formation (props) {
         setMyGate(false)
     }
 
+    // Function for saving team to 'starting eleven' in user db
+    var saveTeam = () => {
+        let fullEleven = [];
+        fullEleven.push(forwards)
+        fullEleven.push(midfielders)
+        fullEleven.push(defenders)
+        fullEleven.push(goalie)
+        var fullElevenFlat = fullEleven.flat()
+        axios.post(`/team/startingeleven/${props.user._id}`, fullElevenFlat).then(response => {
+            console.log(response)
+        })
+    }
+
     // ----------------------- ON FIELD CONDITIONAL MAPPPING ------------------
     // Setting Forwards list
     var selectedForwards;
     if (forwards) {
-        selectedForwards = forwards.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedForwards = forwards.map((ele, id) => (<p key={id} className='player'
+        value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedForwards = ''
     }
@@ -124,7 +298,8 @@ function Formation (props) {
     // Setting Midfielders List
     var selectedMidfielders;
     if (midfielders) {
-        selectedMidfielders = midfielders.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedMidfielders = midfielders.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedMidfielders = ''
     }
@@ -132,7 +307,8 @@ function Formation (props) {
     // Setting Defenders List
     var selectedDefenders;
     if (defenders) {
-        selectedDefenders = defenders.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedDefenders = defenders.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedDefenders = ''
     }
@@ -141,7 +317,8 @@ function Formation (props) {
     var selectedGoalie;
     if (goalie) {
         console.log(goalie)
-        selectedGoalie = goalie.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedGoalie = goalie.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedGoalie = ''
     }
@@ -151,7 +328,8 @@ function Formation (props) {
     var selectedBenchForwards;
     if (benchForwards) {
         console.log(forwards)
-        selectedBenchForwards = benchForwards.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedBenchForwards = benchForwards.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedBenchForwards = ''
     }
@@ -159,7 +337,8 @@ function Formation (props) {
     // Setting Midfielders List
     var selectedBenchMidfielders;
     if (benchMidfielders) {
-        selectedBenchMidfielders = benchMidfielders.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedBenchMidfielders = benchMidfielders.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedBenchMidfielders = ''
     }
@@ -167,7 +346,8 @@ function Formation (props) {
     // Setting Defenders List
     var selectedBenchDefenders;
     if (benchDefenders) {
-        selectedBenchDefenders = benchDefenders.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedBenchDefenders = benchDefenders.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedBenchDefenders = ''
     }
@@ -176,7 +356,8 @@ function Formation (props) {
     var selectedBenchGoalie;
     if (benchGoalie) {
         console.log(goalie)
-        selectedBenchGoalie = benchGoalie.map((ele, id) => (<p key={id} className='player' onClick={handleClick}>{ele.player_name}</p>))
+        selectedBenchGoalie = benchGoalie.map((ele, id) => (<p key={id} className='player' 
+        value={ele.player_name} onClick = {(event) => handleClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedBenchGoalie = ''
     }
@@ -186,8 +367,9 @@ function Formation (props) {
         <>
             <div className='navBar'>
                 <nav>
-                    <Link to='/'>League</Link>{' | '}
+                    <Link to='/'>Welcome</Link>{' | '}
                     <Link to='/formation'>Formation</Link>{' | '}
+                    <Link to='/league'>League</Link>{' | '}
                     <Link to='/team'>Team</Link>
                 </nav>
             </div>
@@ -221,7 +403,11 @@ function Formation (props) {
                             {selectedForwards}
                         </div>
                     </div>
+                    <div>
+                        <button onClick={saveTeam} >Save Team</button>
+                    </div>
                 </div>
+               
             </div>    
         </>
     )

@@ -12,7 +12,9 @@ function Logout () {
                         <Link to='/team'>Team</Link>
                     </nav>
                 </div>
-            <h1>logout</h1>
+            <div className='App donutPicture'>
+                <h1>Saturday Donut League: Fantasy Futbol with your Friends</h1>
+            </div>
         </>
     )
 }

@@ -4,6 +4,8 @@ const router = express.Router();
 const User = require('../models/user')
 const Api = require('../models/api')
 
+
+// Adding player to team from team selection page
 router.post('/add', (req, res) => {
     var playerToAdd;  
     // displaying player from the list of players on the left
@@ -27,12 +29,25 @@ router.post('/add', (req, res) => {
     })
 })
 
+// Grab the current users full selected team
 router.get('/current/:id', (req, res) => {
-    console.log('in current team', req.params.id)
     User.findById(req.params.id, (err, user) => {
         res.json(user.team)
     })  
 })
 
+// Save the selected starting eleven for the week to 'starting eleven'
+router.post('/startingeleven/:id', (req, res) => {
+    console.log('before finding user', req.params.id)
+    User.findById(req.params.id, (err, user) => {
+        console.log(user)
+        req.body.forEach((ele) => {
+            user.startingEleven.push(ele)
+        })
+        console.log('===================================================', user.startingEleven)
+        user.save()
+        res.json(user.startingEleven)
+    })
+})
 
 module.exports = router;
