@@ -58,6 +58,7 @@
   justify-content: center;
   background-color: black;
   margin: 2%;
+  overflow: scroll;
 }
 
 /* ********************* Formation Page ********************************/
@@ -81,29 +82,41 @@
 }
 
 .forwards {
-  background-color: black;
   width: 100%;
   height: 20%;
-
+  color: black;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .goalie {
-  background-color: black;
   width: 100%;
   height: 20%;
-
+  color: black;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .midfielders {
-  background-color: black;
   width: 100%;
   height: 20%;
-  
+  color: black;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .defenders {
-  background-color: black;
   width: 100%;
   height: 20%;
-  
+  color: black;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
 }

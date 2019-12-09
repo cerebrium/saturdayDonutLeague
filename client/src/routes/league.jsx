@@ -6,7 +6,7 @@ function League () {
         <>
             <div className='navBar'>
                 <nav>
-                    <Link to='/league'>League</Link>{' | '}
+                    <Link to='/'>League</Link>{' | '}
                     <Link to='/formation'>Formation</Link>{' | '}
                     <Link to='/team'>Team</Link>
                 </nav>
