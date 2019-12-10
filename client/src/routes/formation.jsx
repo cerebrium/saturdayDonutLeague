@@ -23,8 +23,7 @@ function Formation (props) {
 
     // gate for not having infinite loop
     const [myGate, setMyGate] = useState(false)
-
-    // Temp player for swithcing
+    const [teamText, setTeamText] = useState('Save Team')
 
 
     // ------------------------------- FUNCTIONS -----------------------------------
@@ -218,7 +217,7 @@ function Formation (props) {
             var tempmid = [...midfielders];
             var tempdef = [...defenders];
             var tempfor = [...forwards];
-            var tempgol = [...goalie];
+            var tempgol = [];
 
             // On Bench Player
             var benchTempmid = [...benchMidfielders];
@@ -245,6 +244,9 @@ function Formation (props) {
                         benchTempfor.push(ele)
                     } 
                 } else {
+                    if (tempgol[0] === null) {
+                        tempgol.splice(0,1)
+                    }
                     if (tempgol.length < 1) {
                         tempgol.push(ele)
                     } else {
@@ -273,6 +275,7 @@ function Formation (props) {
     }
 
     // Function for saving team to 'starting eleven' in user db
+    var saveTeamText;
     var saveTeam = () => {
         let fullEleven = [];
         fullEleven.push(forwards)
@@ -283,6 +286,7 @@ function Formation (props) {
         axios.post(`/team/startingeleven/${props.user._id}`, fullElevenFlat).then(response => {
             console.log(response)
         })
+        saveTeamText = 'Team Saved'
     }
 
     // ----------------------- ON FIELD CONDITIONAL MAPPPING ------------------
@@ -316,7 +320,6 @@ function Formation (props) {
     // Setting Goalies
     var selectedGoalie;
     if (goalie) {
-        console.log(goalie)
         selectedGoalie = goalie.map((ele, id) => (<p key={id} className='player' 
         value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
@@ -355,7 +358,6 @@ function Formation (props) {
     // Setting Goalies
     var selectedBenchGoalie;
     if (benchGoalie) {
-        console.log(goalie)
         selectedBenchGoalie = benchGoalie.map((ele, id) => (<p key={id} className='player' 
         value={ele.player_name} onClick = {(event) => handleClick(event, ele)}>{ele.player_name}</p>))
     } else {
@@ -391,7 +393,7 @@ function Formation (props) {
                 <div className='fieldPositioningBox'>
                     <div className='fieldPicture'>
                         <div className='goalie'>
-                            {selectedGoalie[0]}
+                            {selectedGoalie}
                         </div>
                         <div className='defenders'>
                             {selectedDefenders}
@@ -404,7 +406,7 @@ function Formation (props) {
                         </div>
                     </div>
                     <div>
-                        <button onClick={saveTeam} >Save Team</button>
+                        <button onClick={saveTeam} className='saveTeamButton'>{teamText}</button>
                     </div>
                 </div>
                

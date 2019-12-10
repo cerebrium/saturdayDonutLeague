@@ -29,7 +29,8 @@ function App() {
         name: response.profileObj.name, 
         email: response.profileObj.email, 
         googleId: response.profileObj.googleId,
-        team: {}
+        team: {},
+        turn: false
       }).then(res => {
         console.log(`data written`)
         setUser(res.data)

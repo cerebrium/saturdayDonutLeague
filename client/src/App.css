@@ -101,6 +101,14 @@
   align-items: center;
 }
 
+.saveTeamButton {
+  height: 3em;
+  margin: 2%;
+  background-color: chartreuse;
+  border: 3px solid black;
+  font-size: 1em;
+}
+
 .midfielders {
   width: 100%;
   height: 20%;
@@ -137,7 +145,6 @@
 .conditionalLeagueName {
   display: flex;
   flex-direction: column;
-
 }
 
 .formInput {
@@ -153,6 +160,37 @@
   background-color: rgb(199, 9, 9);
   border: 3px solid black;
 }
+
+.fieldPositioningBoxLeft {
+  background-color: aliceblue;
+  margin: 5%;
+  height: 60%;
+  width: 40%;
+}
+
+.fieldPositioningBoxRight {
+  background-color: aliceblue;
+  margin: 5%;
+  height: 60%;
+  width: 40%;
+}
+
+.saveTeamButtonPosition {
+  position: absolute;
+  bottom: 10%;
+}
+
+.titlePositionBoxOne {
+  position: absolute;
+  left: 20%;
+}
+
+.titlePositionBoxTwo {
+  position: absolute;
+  right: 20%;
+}
+
+
 
 /* button {
   background-color: brown;

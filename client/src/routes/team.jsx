@@ -9,19 +9,58 @@ function Team (props) {
     const [ player, setPlayer ] = useState(null)
     const [ currentTeam, setCurrentTeam] = useState([])
 
+    // League Data
+    const [ leagueUsers, setLeagueUsers] = useState([])
+    const [ currentUsersTurn, setCurrentUsersTurn] = useState(null)
+
+    // Logic Gates
+    const [ logicGateOne, setLogicGateOne] = useState(true)
+    const [ logicGateTwo, setLogicGateTwo] = useState(true)
+
+
+    // Route to grab info from the api
+
+    // useEffect(() => {
+    //     axios.get('/api/team').then(response => {
+    //         console.log(response)
+    //     })
+    // }, [])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          console.log('This will run every second!');
+          axios.get(`/user/draft/${props.user.league}`).then(response => {
+            // grabusers array from backend and push it into state
+            setLeagueUsers(response.data)
+            console.log(response.data)
+            setLogicGateOne(true)
+        })
+        }, 1000);
+        return () => clearInterval(interval);
+      }, []);
 
     useEffect(() => {
         axios.get(`/api/currentplayers/${props.user._id}`).then(response => {
+            console.log(response.data)
             setPlayers(response.data)
+        })
+        axios.get(`/user/draft/${props.user.league}`).then(response => {
+            // grabusers array from backend and push it into state
+            setLeagueUsers(response.data)
+            console.log(response.data)
+            setLogicGateOne(true)
         })
     },[currentTeam])
 
     useEffect(() => {
-        console.log(props.user._id)
         axios.get(`/team/current/${props.user._id}`).then(response => {
             setCurrentTeam(response.data)
         })
     },[])
+
+    // useEffect(() => {
+        
+    // }, [currentTeam])
 
     // Select one player from list
     let handleClick = (event, ele) => {
@@ -49,6 +88,30 @@ function Team (props) {
         selectedTeam = currentTeam.map((ele, id) => (<p key={id} className='player'>{ele.player_name}</p>))
     } else {
         selectedTeam = ''
+    }
+
+    // ---------------------------------- conditional selection process ------------------------ //
+    if (leagueUsers && logicGateOne) {
+        let myArray = [];
+        leagueUsers.forEach((ele) => {
+            if (ele.turn === true) {
+                myArray.push(ele)
+            }
+        })
+        setCurrentUsersTurn(myArray[0])
+        setLogicGateOne(false)
+    }
+
+    var currUsrTurn;
+    if (currentUsersTurn) {
+        console.log('--------------------- current users turn', currentUsersTurn.name)
+        currUsrTurn = (
+            <h1>{currentUsersTurn.name}</h1>
+        )
+    } else {
+        currUsrTurn = (
+            <h1>all players selected</h1>
+        ) 
     }
 
     // set one player for viewing purposes
@@ -106,6 +169,9 @@ function Team (props) {
                     <h1>Current Team Selection</h1>
                     {selectedTeam}
                 </div>
+                <div>
+                    {currUsrTurn}
+                </div>
             </div>
         </>
     )
@@ -114,13 +180,7 @@ function Team (props) {
 export default Team;
 
 
-    // Route to grab info from the api
 
-    // useEffect(() => {
-    //     axios.get('/api/team').then(response => {
-    //         console.log(response)
-    //     })
-    // }, [])
 
     // Route to query database
 

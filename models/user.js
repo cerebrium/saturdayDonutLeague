@@ -16,13 +16,18 @@ const userSchema = new mongoose.Schema ({
         type: String,
     },
     team: {
-        type: Array
+        type: Array,
+        maxlength: 18,
     }, 
     startingEleven: {
-        type: Array
+        type: Array,
+        maxlength: 11,
     },
     league: {
         type: String
+    },
+    turn: {
+        type: Boolean
     }
 })
 

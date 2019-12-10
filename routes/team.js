@@ -9,7 +9,7 @@ const Api = require('../models/api')
 router.post('/add', (req, res) => {
     var playerToAdd;  
     // displaying player from the list of players on the left
-    Api.findById('5dea9ebd4cb6ed115216499f', (err, team) => {
+    Api.findById('5df00ec122ee88758aa87e05', (err, team) => {
         let myNum = req.body.playerId
         team.team.api.players.forEach((ele, index) => {
             if (parseInt(ele.player_id) === parseInt(myNum)) {
@@ -40,11 +40,13 @@ router.get('/current/:id', (req, res) => {
 router.post('/startingeleven/:id', (req, res) => {
     console.log('before finding user', req.params.id)
     User.findById(req.params.id, (err, user) => {
+        let startingArray = []
         console.log(user)
         req.body.forEach((ele) => {
-            user.startingEleven.push(ele)
+            startingArray.push(ele)
         })
-        console.log('===================================================', user.startingEleven)
+        user.startingEleven = startingArray
+        console.log('==================================================', user.startingEleven)
         user.save()
         res.json(user.startingEleven)
     })
