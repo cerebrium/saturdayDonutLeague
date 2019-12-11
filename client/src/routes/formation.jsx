@@ -293,7 +293,7 @@ function Formation (props) {
     // Setting Forwards list
     var selectedForwards;
     if (forwards) {
-        selectedForwards = forwards.map((ele, id) => (<p key={id} className='player'
+        selectedForwards = forwards.map((ele, id) => (<p key={id} className='playerForm'
         value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedForwards = ''
@@ -302,7 +302,7 @@ function Formation (props) {
     // Setting Midfielders List
     var selectedMidfielders;
     if (midfielders) {
-        selectedMidfielders = midfielders.map((ele, id) => (<p key={id} className='player' 
+        selectedMidfielders = midfielders.map((ele, id) => (<p key={id} className='playerForm' 
         value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedMidfielders = ''
@@ -311,7 +311,7 @@ function Formation (props) {
     // Setting Defenders List
     var selectedDefenders;
     if (defenders) {
-        selectedDefenders = defenders.map((ele, id) => (<p key={id} className='player' 
+        selectedDefenders = defenders.map((ele, id) => (<p key={id} className='playerForm' 
         value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedDefenders = ''
@@ -320,7 +320,7 @@ function Formation (props) {
     // Setting Goalies
     var selectedGoalie;
     if (goalie) {
-        selectedGoalie = goalie.map((ele, id) => (<p key={id} className='player' 
+        selectedGoalie = goalie.map((ele, id) => (<p key={id} className='playerForm' 
         value={ele.player_name} onClick = {(event) => handleBenchClick(event, ele)}>{ele.player_name}</p>))
     } else {
         selectedGoalie = ''

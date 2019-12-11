@@ -169,11 +169,11 @@ function League (props) {
 
     // ----------------------------------- CONDITIONAL RENDERING ---------------------------------------- //
     var conditionalLeagueName;
-    if (leagueName) {
+    if (leagueName && userOne && userTwo) {
         // ----------------------------------- ON FIELD CONDITIONAL MAPPING ONE ---------------------------------------- //
         var selectedForwards;
         if (oneForwards) {
-            selectedForwards = oneForwards.map((ele, id) => (<p key={id} className='player'>{ele}</p>))
+            selectedForwards = oneForwards.map((ele, id) => (<p key={id} className='playerForm'>{ele}</p>))
         } else {
             selectedForwards = ''
         }
@@ -181,7 +181,7 @@ function League (props) {
         // Setting Midfielders List
         var selectedMidfielders;
         if (oneMidfielders) {
-            selectedMidfielders = oneMidfielders.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
+            selectedMidfielders = oneMidfielders.map((ele, id) => (<p key={id} className='playerForm' >{ele}</p>))
         } else {
             selectedMidfielders = ''
         }
@@ -189,7 +189,7 @@ function League (props) {
         // Setting Defenders List
         var selectedDefenders;
         if (oneDefenders) {
-            selectedDefenders = oneDefenders.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
+            selectedDefenders = oneDefenders.map((ele, id) => (<p key={id} className='playerForm' >{ele}</p>))
         } else {
             selectedDefenders = ''
         }
@@ -197,7 +197,7 @@ function League (props) {
         // Setting Goalies
         var selectedGoalie;
         if (oneGoalie) {
-            selectedGoalie = oneGoalie.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
+            selectedGoalie = oneGoalie.map((ele, id) => (<p key={id} className='playerForm' >{ele}</p>))
         } else {
             selectedGoalie = ''
         }
@@ -205,7 +205,7 @@ function League (props) {
         // ----------------------------------- ON FIELD CONDITIONAL MAPPING TWO ---------------------------------------- //
         var selectedTwoForwards;
         if (twoForwards) {
-            selectedTwoForwards = twoForwards.map((ele, id) => (<p key={id} className='player'>{ele}</p>))
+            selectedTwoForwards = twoForwards.map((ele, id) => (<p key={id} className='playerForm'>{ele}</p>))
         } else {
             selectedTwoForwards = ''
         }
@@ -213,7 +213,7 @@ function League (props) {
         // Setting Midfielders List
         var selectedTwoMidfielders;
         if (twoMidfielders) {
-            selectedTwoMidfielders = twoMidfielders.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
+            selectedTwoMidfielders = twoMidfielders.map((ele, id) => (<p key={id} className='playerForm' >{ele}</p>))
         } else {
             selectedTwoMidfielders = ''
         }
@@ -221,7 +221,7 @@ function League (props) {
         // Setting Defenders List
         var selectedTwoDefenders;
         if (twoDefenders) {
-            selectedTwoDefenders = twoDefenders.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
+            selectedTwoDefenders = twoDefenders.map((ele, id) => (<p key={id} className='playerForm' >{ele}</p>))
         } else {
             selectedTwoDefenders = ''
         }
@@ -229,8 +229,8 @@ function League (props) {
         // Setting Goalies
         var selectedTwoGoalie;
         if (twoGoalie) {
-            // selectedTwoGoalie = twoGoalie.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
-            selectedTwoGoalie = ''
+            selectedTwoGoalie = twoGoalie.map((ele, id) => (<p key={id} className='player' >{ele}</p>))
+            // selectedTwoGoalie = ''
         } else {
             selectedTwoGoalie = ''
         }

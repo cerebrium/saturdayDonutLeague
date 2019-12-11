@@ -51,6 +51,16 @@
   margin: 2%;
 }
 
+.player:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.playerForm:hover {
+  background-color: yellow;
+  color: black;
+}
+
 .singlePlayer {
   color: aliceblue;
   height: 80vh;
@@ -79,6 +89,19 @@
   margin: 2%;
   height: 80%;
   width: 60%;
+}
+
+.addToTeamButton {
+  height: 3em;
+  margin: 2%;
+  background-color: chartreuse;
+  border: 3px solid black;
+  font-size: 1em;
+}
+
+.playerForm {
+  color: black;
+  font-size: 2em;
 }
 
 .forwards {

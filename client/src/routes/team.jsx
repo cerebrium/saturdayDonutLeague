@@ -27,6 +27,7 @@ function Team (props) {
     //     })
     // }, [])
 
+    // Interval that updates ll the lists
     useEffect(() => {
         const interval = setInterval(() => {
           axios.get(`/user/draft/${props.user.league}`).then(response => {
@@ -42,7 +43,6 @@ function Team (props) {
                     myToBeFlatArray.push(ele.player_name)
                 })
             })
-            console.log('my To Be Flat Array', myToBeFlatArray)
             let flattenedArrayOfPlayers = myToBeFlatArray.flat()
             setCurrentFlatPlayers(flattenedArrayOfPlayers)
         })
@@ -50,6 +50,7 @@ function Team (props) {
         return () => clearInterval(interval);
       }, []);
 
+    // Grab the players and push them to the array of current plyers and also grab the league data first time
     useEffect(() => {
         axios.get(`/api/currentplayers/${props.user._id}`).then(response => {
             setPlayers(response.data)
@@ -140,7 +141,7 @@ function Team (props) {
                     <br />
                 <form onSubmit={handleSubmit}>
                     <input type="hidden" name="playerId" value={player.player_id}/>
-                    <input type="submit" value="Add to Team"/>
+                    <input type="submit" value="Add to Team" className='addToTeamButton'/>
                 </form>
             </>
         )
@@ -152,11 +153,8 @@ function Team (props) {
     var playerRow;
     if (players && currentFlatPlayers) {
         let arrayOfPlayersToMap = []
-        console.log('currentFlatPlayers', currentFlatPlayers)
-        console.log('players', players)
         players.forEach((ele) => {
             if (currentFlatPlayers.includes(ele.player_name)) {
-                console.log(ele.player_name)
             } else {
                 arrayOfPlayersToMap.push(ele)
             }
@@ -189,6 +187,7 @@ function Team (props) {
                     {selectedTeam}
                 </div>
                 <div>
+                    <h1>User to pick:</h1>
                     {currUsrTurn}
                 </div>
             </div>
@@ -200,40 +199,3 @@ export default Team;
 
 
 
-
-    // Route to query database
-
-
-
-
-//     age: 31
-// birth_country: "Chile"
-// birth_date: "19/12/1988"
-// birth_place: "Tocopilla"
-// captain: 0
-// cards: {yellow: 3, yellowred: 0, red: 0}
-// dribbles: {attempts: 27, success: 14}
-// duels: {total: 135, won: 56}
-// firstname: "Alexis Alejandro"
-// fouls: {drawn: 18, committed: 14}
-// games: {appearences: 20, minutes_played: 877, lineups: 9}
-// goals: {total: 1, conceded: 0, assists: 3}
-// height: "169 cm"
-// injured: null
-// lastname: "Sánchez Sánchez"
-// league: "Premier League"
-// nationality: "Chile"
-// number: null
-// passes: {total: 285, key: 21, accuracy: 74}
-// penalty: {won: 0, commited: 0, success: 0, missed: 0, saved: 0}
-// player_id: 910
-// player_name: "A. Sánchez"
-// position: "Attacker"
-// rating: "6.845000"
-// season: "2018-2019"
-// shots: {total: 17, on: 9}
-// substitutes: {in: 11, out: 8, bench: 14}
-// tackles: {total: 10, blocks: 0, interceptions: 9}
-// team_id: 33
-// team_name: "Manchester United"
-// weight: "62 kg"
