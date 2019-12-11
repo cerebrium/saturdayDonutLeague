@@ -38,15 +38,12 @@ router.get('/current/:id', (req, res) => {
 
 // Save the selected starting eleven for the week to 'starting eleven'
 router.post('/startingeleven/:id', (req, res) => {
-    console.log('before finding user', req.params.id)
     User.findById(req.params.id, (err, user) => {
         let startingArray = []
-        console.log(user)
         req.body.forEach((ele) => {
             startingArray.push(ele)
         })
         user.startingEleven = startingArray
-        console.log('==================================================', user.startingEleven)
         user.save()
         res.json(user.startingEleven)
     })
