@@ -12,6 +12,7 @@ function Team (props) {
     // League Data
     const [ leagueUsers, setLeagueUsers] = useState([])
     const [ currentUsersTurn, setCurrentUsersTurn] = useState(null)
+    const [ currentFlatPlayers, setCurrentFlatPlayers] =useState([])
 
     // Logic Gates
     const [ logicGateOne, setLogicGateOne] = useState(true)
@@ -28,12 +29,22 @@ function Team (props) {
 
     useEffect(() => {
         const interval = setInterval(() => {
-          console.log('This will run every second!');
           axios.get(`/user/draft/${props.user.league}`).then(response => {
             // grabusers array from backend and push it into state
             setLeagueUsers(response.data)
-            console.log(response.data)
             setLogicGateOne(true)
+
+            let myToBeFlatArray = []
+            // make array of already choosen players
+            response.data.forEach((ele) => {
+                ele.team.forEach((ele) => {
+                    console.log('ele',ele)
+                    myToBeFlatArray.push(ele.player_name)
+                })
+            })
+            console.log('my To Be Flat Array', myToBeFlatArray)
+            let flattenedArrayOfPlayers = myToBeFlatArray.flat()
+            setCurrentFlatPlayers(flattenedArrayOfPlayers)
         })
         }, 1000);
         return () => clearInterval(interval);
@@ -41,13 +52,11 @@ function Team (props) {
 
     useEffect(() => {
         axios.get(`/api/currentplayers/${props.user._id}`).then(response => {
-            console.log(response.data)
             setPlayers(response.data)
         })
         axios.get(`/user/draft/${props.user.league}`).then(response => {
             // grabusers array from backend and push it into state
             setLeagueUsers(response.data)
-            console.log(response.data)
             setLogicGateOne(true)
         })
     },[currentTeam])
@@ -141,8 +150,18 @@ function Team (props) {
 
     // makes row of players on the left
     var playerRow;
-    if (players) {
-        var playerRow = players.map((ele, id) => (<p key={id} onClick={(event) => handleClick(event, ele)} className='player'>{ele.player_name}</p>))
+    if (players && currentFlatPlayers) {
+        let arrayOfPlayersToMap = []
+        console.log('currentFlatPlayers', currentFlatPlayers)
+        console.log('players', players)
+        players.forEach((ele) => {
+            if (currentFlatPlayers.includes(ele.player_name)) {
+                console.log(ele.player_name)
+            } else {
+                arrayOfPlayersToMap.push(ele)
+            }
+        })
+        var playerRow = arrayOfPlayersToMap.map((ele, id) => (<p key={id} onClick={(event) => handleClick(event, ele)} className='player'>{ele.player_name}</p>))
     } else {
         playerRow = ''
     }
