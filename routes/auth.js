@@ -51,49 +51,52 @@ router.get('/lnames/allnames/:name', (req, res) => {
 router.get('/draft/:name', (req, res) => {
     // array of team lengths
     let teamLengthsArray = []
-
     User.find({league: req.params.name}, (err, users) => {
-        // Check lengths of the teams
-        users.forEach((ele) => {
-            teamLengthsArray.push(ele.team.length)
-        })
-
-        // if all teams equal each other
-        let mySet = new Set(teamLengthsArray)
-        if (mySet.size === 1) {
-
-            // set users[0].turn = true
-            users[0].turn = true
-            users[0].save()
-
-            // res.json all of the users
-            res.json(users)
-
+        if (users.length > 1) {
+            // Check lengths of the teams
+            users.forEach((ele) => {
+                teamLengthsArray.push(ele.team.length)
+            })
+    
+            // if all teams equal each other
+            let mySet = new Set(teamLengthsArray)
+            if (mySet.size === 1) {
+    
+                // set users[0].turn = true
+                users[0].turn = true
+                users[0].save()
+    
+                // res.json all of the users
+                res.json(users)
+    
+            } else {
+    
+                // make all users turns false
+                users.forEach((ele) => {
+                    ele.turn = false
+                    ele.save()
+                })
+    
+                // find index of first user not with a team length equal to the first user
+                let check = users[0].team.length
+                var myArray = []
+    
+                // Make array of all users that havent gone yet
+                users.forEach((ele) => {
+                    if (ele.team.length !== check) {
+                        myArray.push(ele)
+                    }
+                })
+    
+                // make first user in the not-gone-users-array have a turn
+                myArray[0].turn = true
+                myArray[0].save()
+    
+                // send users to front end
+                res.json(users)
+            }
         } else {
-
-            // make all users turns false
-            users.forEach((ele) => {
-                ele.turn = false
-                ele.save()
-            })
-
-            // find index of first user not with a team length equal to the first user
-            let check = users[0].team.length
-            var myArray = []
-
-            // Make array of all users that havent gone yet
-            users.forEach((ele) => {
-                if (ele.team.length !== check) {
-                    myArray.push(ele)
-                }
-            })
-
-            // make first user in the not-gone-users-array have a turn
-            myArray[0].turn = true
-            myArray[0].save()
-
-            // send users to front end
-            res.json(users)
+            return 
         }
     })
 })

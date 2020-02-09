@@ -111,11 +111,13 @@ function League (props) {
     if (logicGate && leagueName) {
         console.log(leagueName)
         axios.get(`/user/lnames/allnames/${leagueName}`).then(response => {
-            console.log(response.data)
-            sortOne(response.data[0].startingEleven)
-            sortTwo(response.data[1].startingEleven)
-            setUserOne(response.data[0])
-            setUserTwo(response.data[1])
+            if (response.data.length > 1) {
+                console.log(response.data)
+                sortOne(response.data[0].startingEleven)
+                sortTwo(response.data[1].startingEleven)
+                setUserOne(response.data[0])
+                setUserTwo(response.data[1])
+            }
         })
         setLogicGate(false)
     }
@@ -289,15 +291,22 @@ function League (props) {
                 </div>  
             </>    
         )
+        } else if (leagueName && !userTwo) {
+            conditionalLeagueName = (
+                <div className='onlyLeagueStyle'>
+                    <h1>{leagueName}</h1><br />
+                    <h3>Unfortunetly you are the only one in your league... add other people to play!</h3>
+                </div>
+            )
         } else {
             conditionalLeagueName = (
                 <div className='conditionalLeagueName'>
-                <h1>No League Selected</h1><br />
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name='leagueName' className='formInput'/><br />
-                    <input type="submit" value="Submit League Name" className='submitButton'/>
-                </form>
-            </div>
+                    <h1>No League Selected</h1><br />
+                    <form onSubmit={handleSubmit}>
+                        <input type="text" name='leagueName' className='formInput'/><br />
+                        <input type="submit" value="Submit League Name" className='submitButton'/>
+                    </form>
+                </div>
         )    
     }
     return (
