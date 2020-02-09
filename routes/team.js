@@ -9,7 +9,7 @@ const Api = require('../models/api')
 router.post('/add', (req, res) => {
     var playerToAdd;  
     // displaying player from the list of players on the left
-    Api.findById('5df00ec122ee88758aa87e05', (err, team) => {
+    Api.findById('5e4051635c78470024fa80a3', (err, team) => {
         let myNum = req.body.playerId
         team.team.api.players.forEach((ele, index) => {
             if (parseInt(ele.player_id) === parseInt(myNum)) {
