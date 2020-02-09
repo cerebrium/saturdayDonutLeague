@@ -17,37 +17,45 @@
 /* ********************* Team Page ********************************/
 .AppTwo {
   text-align: center;
-  height: 100vh;
-  width: 100vw;
-  padding-top: 7%;
-  margin: 0;
+  /* height: 100vh;
+  width: 100vw; */
   display: flex;
 }
 
 .ballPicture {
-  background-image: url(./pictures/ball.jpg);
+  background-image: url(./pictures/jake-weirick-stadium.jpg);
   background-size: cover;
 }
 
 .navBar {
-  height: 10vh;
-  background: rgb(116, 112, 112);
+  height: 5vh;
   display: flex;
+  background-color: rgba(255, 255, 255, 0.596);
   width: 100%;
   position: fixed;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  font-size: 2em;
   z-index: 1;
 }
 
+.navLinks {
+  text-decoration: none;
+  color: black;
+  font-size: 2em;
+}
+
+.navLinks:hover {
+  color: orangered;
+  font-size: 2.1em;
+}
+
 .playerList {
-  color: aliceblue;
+  color: white;
   height: 80%;
   width: 20%;
   justify-content: left;
   overflow: scroll;
-  background-color: black;
+  background-color: rgba(3, 3, 3, 0.9);
   margin: 2%;
 }
 
@@ -62,11 +70,11 @@
 }
 
 .singlePlayer {
-  color: aliceblue;
+  color: white;
   height: 80vh;
   width: 20vw;
   justify-content: center;
-  background-color: black;
+  background-color: rgba(3, 3, 3, 0.9);
   margin: 2%;
   overflow: scroll;
 }
@@ -94,8 +102,9 @@
 .addToTeamButton {
   height: 3em;
   margin: 2%;
-  background-color: chartreuse;
+  background-color: rgb(171, 230, 113);
   border: 3px solid black;
+  width: 5vw;
   font-size: 1em;
 }
 
@@ -127,7 +136,8 @@
 .saveTeamButton {
   height: 3em;
   margin: 2%;
-  background-color: chartreuse;
+  width: 5vw;
+  background-color: rgb(171, 230, 113);
   border: 3px solid black;
   font-size: 1em;
 }
@@ -165,6 +175,18 @@
   color: aliceblue;
 }
 
+.scoreDiv {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scores {
+  width: 20%;
+  margin-top: 5%;
+  background-color: rgba(3, 3, 3, 0.9);
+}
+
 .conditionalLeagueName {
   display: flex;
   flex-direction: column;
@@ -185,14 +207,12 @@
 }
 
 .fieldPositioningBoxLeft {
-  background-color: aliceblue;
   margin: 5%;
   height: 60%;
   width: 40%;
 }
 
 .fieldPositioningBoxRight {
-  background-color: aliceblue;
   margin: 5%;
   height: 60%;
   width: 40%;

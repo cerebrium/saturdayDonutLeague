@@ -109,7 +109,6 @@ function League (props) {
 
     // ----------------------------------- CONDITIONAL GRABBING OF LEAGUE DATA ---------------------------------------- //
     if (logicGate && leagueName) {
-        console.log(leagueName)
         axios.get(`/user/lnames/allnames/${leagueName}`).then(response => {
             if (response.data.length > 1) {
                 console.log(response.data)
@@ -236,8 +235,6 @@ function League (props) {
         } else {
             selectedTwoGoalie = ''
         }
-
-        console.log(userOne, userTwo)
         conditionalLeagueName = (
             <>
                 <div className='titlePositionBoxOne'>
@@ -258,9 +255,11 @@ function League (props) {
                             {selectedForwards}
                         </div>
                     </div>
-                    <div>
-                        <h3>Score:</h3>
-                        <h3>{teamOneScoreCondition}</h3>
+                    <div className='scoreDiv'>
+                        <div className='scores'>
+                            <h3>Score:</h3>
+                            <h3>{teamOneScoreCondition}</h3>
+                        </div>
                     </div>
                 </div>  
                 <div className='saveTeamButtonPosition'>
@@ -284,9 +283,11 @@ function League (props) {
                             {selectedTwoForwards}
                         </div>
                     </div>
-                    <div>
-                        <h3>Score:</h3>
-                        <h3>{teamTwoScoreCondition}</h3>
+                    <div className='scoreDiv'>
+                        <div className='scores'>
+                            <h3>Score:</h3>
+                            <h3>{teamTwoScoreCondition}</h3>
+                        </div>
                     </div>
                 </div>  
             </>    
@@ -311,12 +312,12 @@ function League (props) {
     }
     return (
         <>
-            <div className='navBar'>
-                <nav>
-                    <Link to='/'>Welcome</Link>{' | '}
-                    <Link to='/formation'>Formation</Link>{' | '}
-                    <Link to='/league'>League</Link>{' | '}
-                    <Link to='/team'>Team</Link>
+            <div >
+                <nav className='navBar'>
+                    <Link to='/' className='navLinks'>Welcome</Link>{' | '}
+                    <Link to='/formation' className='navLinks'>Formation</Link>{' | '}
+                    <Link to='/league' className='navLinks'>League</Link>{' | '}
+                    <Link to='/team' className='navLinks'>Team</Link>
                 </nav>
             </div>
             <div className='AppTwo ballPicture'>

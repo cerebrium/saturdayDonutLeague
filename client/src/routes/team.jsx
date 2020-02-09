@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../App.css';
+import '../App.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -19,28 +19,19 @@ function Team (props) {
     const [ logicGateTwo, setLogicGateTwo] = useState(true)
 
 
-    // Route to grab info from the api
-
-    // useEffect(() => {
-    //     axios.get('/api/team').then(response => {
-    //         console.log(response)
-    //     })
-    // }, [])
-    // new comment
-
+    
     // Interval that updates ll the lists
     useEffect(() => {
         const interval = setInterval(() => {
-          axios.get(`/user/draft/${props.user.league}`).then(response => {
-            // grabusers array from backend and push it into state
-            setLeagueUsers(response.data)
-            setLogicGateOne(true)
-
-            let myToBeFlatArray = []
-            // make array of already choosen players
+            axios.get(`/user/draft/${props.user.league}`).then(response => {
+                // grabusers array from backend and push it into state
+                setLeagueUsers(response.data)
+                setLogicGateOne(true)
+                
+                let myToBeFlatArray = []
+                // make array of already choosen players
             response.data.forEach((ele) => {
                 ele.team.forEach((ele) => {
-                    console.log('ele',ele)
                     myToBeFlatArray.push(ele.player_name)
                 })
             })
@@ -50,30 +41,30 @@ function Team (props) {
         }, 1000);
         return () => clearInterval(interval);
       }, []);
-
-    // Grab the players and push them to the array of current plyers and also grab the league data first time
-    useEffect(() => {
-        axios.get(`/api/currentplayers/${props.user._id}`).then(response => {
-            setPlayers(response.data)
-        })
-        axios.get(`/user/draft/${props.user.league}`).then(response => {
-            // grabusers array from backend and push it into state
+      
+      // Grab the players and push them to the array of current plyers and also grab the league data first time
+      useEffect(() => {
+          axios.get(`/api/currentplayers/${props.user._id}`).then(response => {
+              setPlayers(response.data)
+            })
+            axios.get(`/user/draft/${props.user.league}`).then(response => {
+                // grabusers array from backend and push it into state
             setLeagueUsers(response.data)
             setLogicGateOne(true)
         })
     },[currentTeam])
-
+    
     useEffect(() => {
         axios.get(`/team/current/${props.user._id}`).then(response => {
             setCurrentTeam(response.data)
         })
     },[])
-
+    
     // Select one player from list
     let handleClick = (event, ele) => {
         setPlayer(ele)
     }
-
+    
     let handleSubmit = (event) => {
         event.preventDefault();
         var currentArray;
@@ -108,19 +99,19 @@ function Team (props) {
         setCurrentUsersTurn(myArray[0])
         setLogicGateOne(false)
     }
-
+    
     var currUsrTurn;
     if (currentUsersTurn) {
         console.log('--------------------- current users turn', currentUsersTurn.name)
         currUsrTurn = (
             <h1>{currentUsersTurn.name}</h1>
-        )
+            )
     } else {
         currUsrTurn = (
-            <h1>all players selected</h1>
+            <h1>Team Selection Not Available</h1>
         ) 
     }
-
+    
     // set one player for viewing purposes
     var singlePlayer;
     if (player) {
@@ -145,7 +136,7 @@ function Team (props) {
     } else {
         singlePlayer = ''
     }
-
+    
     // makes row of players on the left
     var playerRow;
     if (players && currentFlatPlayers) {
@@ -160,17 +151,17 @@ function Team (props) {
     } else {
         playerRow = ''
     }
-
+    
     return (
         <>
-            <div className='navBar'>
-                    <nav>
-                        <Link to='/'>Welcome</Link>{' | '}
-                        <Link to='/formation'>Formation</Link>{' | '}
-                        <Link to='/league'>League</Link>{' | '}
-                        <Link to='/team'>Team</Link>
-                    </nav>
-                </div>
+            <div >
+                <nav className='navBar'>
+                    <Link to='/' className='navLinks'>Welcome</Link>{' | '}
+                    <Link to='/formation' className='navLinks'>Formation</Link>{' | '}
+                    <Link to='/league' className='navLinks'>League</Link>{' | '}
+                    <Link to='/team' className='navLinks'>Team</Link>
+                </nav>
+            </div>
             <div className='AppTwo ballPicture'>
                 <div className='playerList'>
                     <h1>Players</h1>
@@ -196,3 +187,11 @@ export default Team;
 
 
 
+
+// Route to grab info from the api... DO NOT TOUCH
+
+// useEffect(() => {
+//     axios.get('/api/team').then(response => {
+//         console.log(response)
+//     })
+// }, [])

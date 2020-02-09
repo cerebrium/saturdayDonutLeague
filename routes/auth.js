@@ -4,6 +4,7 @@ const User = require('../models/user')
 
 // Storing user data in the database for team creation and checking
 router.post('/signup', (req, res) => {
+    console.log('in the signup route')
     // console.log('inside the db posting route', req.body.email)
     // find user based on email
     User.findOne({ email: req.body.email }, (err, user) => {
@@ -53,6 +54,7 @@ router.get('/draft/:name', (req, res) => {
     let teamLengthsArray = []
     User.find({league: req.params.name}, (err, users) => {
         if (users.length > 1) {
+            console.log('inside the draft, teamLengthsArray: ', teamLengthsArray)
             // Check lengths of the teams
             users.forEach((ele) => {
                 teamLengthsArray.push(ele.team.length)
@@ -95,8 +97,6 @@ router.get('/draft/:name', (req, res) => {
                 // send users to front end
                 res.json(users)
             }
-        } else {
-            return 
         }
     })
 })
