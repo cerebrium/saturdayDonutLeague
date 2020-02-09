@@ -21,11 +21,11 @@ function Team (props) {
 
     // Route to grab info from the api
 
-    // useEffect(() => {
-    //     axios.get('/api/team').then(response => {
-    //         console.log(response)
-    //     })
-    // }, [])
+    useEffect(() => {
+        axios.get('/api/team').then(response => {
+            console.log(response)
+        })
+    }, [])
 
     // Interval that updates ll the lists
     useEffect(() => {
@@ -67,10 +67,6 @@ function Team (props) {
             setCurrentTeam(response.data)
         })
     },[])
-
-    // useEffect(() => {
-        
-    // }, [currentTeam])
 
     // Select one player from list
     let handleClick = (event, ele) => {

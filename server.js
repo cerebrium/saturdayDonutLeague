@@ -23,6 +23,12 @@ app.use('/user', require('./routes/auth'));
 app.use('/api', require('./routes/api'));
 app.use('/team', require('./routes/team'));
 
+app.use(express.static(__dirname + '/client/build'))
+
+app.get('*', function(req, res) {
+	res.sendFile(__dirname + '/client/build/index.html');
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`server running on port: ${process.env.PORT}`)
 })
