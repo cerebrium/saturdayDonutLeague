@@ -21,11 +21,12 @@ function Team (props) {
 
     // Route to grab info from the api
 
-    useEffect(() => {
-        axios.get('/api/team').then(response => {
-            console.log(response)
-        })
-    }, [])
+    // useEffect(() => {
+    //     axios.get('/api/team').then(response => {
+    //         console.log(response)
+    //     })
+    // }, [])
+    // new comment
 
     // Interval that updates ll the lists
     useEffect(() => {
